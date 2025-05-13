@@ -1,5 +1,6 @@
+// models/user.js
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const bcrypt   = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
@@ -16,26 +17,19 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters"],
       select: false, // exclude password from queries by default
+      // no 'required' here anymore
     },
-    credits:{
-      type:Number,
+    googleId: { type: String, unique: true, sparse: true }, // new
+    credits: {
+      type: Number,
       required: true,
-      default: 3
-
+      default: 3,
     },
-    payment_count: { type: Number, required: true, default:0 },
-
-
-    total_amount:{
-      type:Number,
-      required: true,
-      default: 0
-
-    },
-
+    payment_count: { type: Number, required: true, default: 0 },
+    total_amount:   { type: Number, required: true, default: 0 },
+    lastCreditDeductedAt: { type: Date, default: null },
   },
   {
     timestamps: true,
@@ -43,15 +37,14 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Password hash before save
+// Only hash password if it was provided and modified
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password") || !this.password) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-// Compare password method
 userSchema.methods.comparePassword = function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };

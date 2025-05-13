@@ -1,21 +1,10 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// src/components/ProtectedRoute.jsx
+import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Check if auth_token exists in cookies
-    const token = document.cookie.split('').find(cookie => cookie.trim().startsWith('auth_token='));
-    // console.log(token);
-
-    if (!token) {
-      // If no token, redirect to login page
-      navigate('/login');
-    }
-  }, [navigate]);
-
+export default function ProtectedRoute({ children }) {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
   return children;
-};
-
-export default ProtectedRoute;
+}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "../api/axios";
 
@@ -12,6 +12,11 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+    useEffect(() => {
+      document.title = "Signup";
+    }, []);
+  
+    
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -47,113 +52,131 @@ const Signup = () => {
   };
 
   return (
-    <div className="max-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-black/30 backdrop-blur-lg rounded-2xl border border-cyan-400/20 p-8 shadow-2xl shadow-cyan-500/20">
         <div className="text-center">
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            Create your account
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-2">
+            CREATE ACCOUNT
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
-            Already have an account?{' '}
+          <p className="text-cyan-400/80 font-mono text-sm">
+            Join our story generation network
+          </p>
+          <div className="mt-4">
             <Link 
               to="/login" 
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="text-cyan-400 hover:text-cyan-300 text-sm font-mono transition-all"
             >
-              Sign in
+              Already registered? <span className="underline">Sign in</span>
             </Link>
-          </p>
+          </div>
         </div>
-
+  
         {error && (
-          <div className="rounded-md bg-red-50 p-4">
-            <p className="text-sm text-red-800">{error}</p>
+          <div className="mt-6 p-3 rounded-lg border border-red-400/30 bg-red-400/10 text-red-400">
+            <p className="text-sm">{error}</p>
           </div>
         )}
-
+  
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm space-y-4">
-            <div>
-              <label htmlFor="email" className="sr-only">Email address</label>
+          <div className="space-y-4">
+            <div className="relative group">
               <input
                 id="email"
                 name="email"
                 type="email"
-                autoComplete="email"
                 required
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-white-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
+                className="w-full px-4 py-3 bg-black/30 border-2 border-cyan-400/20 rounded-lg text-cyan-100 font-mono placeholder-cyan-400/50 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 transition-all"
+                placeholder="Email Address"
                 value={form.email}
                 onChange={handleChange}
               />
+              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-20 bg-gradient-to-r from-cyan-400/30 to-transparent transition-opacity pointer-events-none" />
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">Password</label>
+  
+            <div className="relative group">
               <input
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="new-password"
                 required
                 minLength="6"
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-white-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="w-full px-4 py-3 bg-black/30 border-2 border-cyan-400/20 rounded-lg text-cyan-100 font-mono placeholder-cyan-400/50 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 transition-all"
                 placeholder="Password (min 6 characters)"
                 value={form.password}
                 onChange={handleChange}
               />
+              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-20 bg-gradient-to-r from-cyan-400/30 to-transparent transition-opacity pointer-events-none" />
             </div>
-            <div>
-              <label htmlFor="confirmPassword" className="sr-only">Confirm Password</label>
+  
+            <div className="relative group">
               <input
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
-                autoComplete="new-password"
                 required
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-white-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="w-full px-4 py-3 bg-black/30 border-2 border-cyan-400/20 rounded-lg text-cyan-100 font-mono placeholder-cyan-400/50 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 transition-all"
                 placeholder="Confirm Password"
                 value={form.confirmPassword}
                 onChange={handleChange}
               />
+              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-20 bg-gradient-to-r from-cyan-400/30 to-transparent transition-opacity pointer-events-none" />
             </div>
           </div>
-
-          <div className="flex items-center">
-            <input
-              id="terms"
-              name="terms"
-              type="checkbox"
-              required
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
-            <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
-              I agree to the{' '}
-              <Link to="/terms" className="text-blue-600 hover:text-blue-500">
-                Terms and Conditions
-              </Link>
-            </label>
-          </div>asdsa
-
-          <div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
-            >
-              {isLoading ? (
-                <>
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Registering...
-                </>
-              ) : 'Register'}
-            </button>
+  
+          <div className="flex items-start">
+            <div className="flex items-center h-5">
+              <input
+                id="terms"
+                name="terms"
+                type="checkbox"
+                required
+                className="h-4 w-4 text-cyan-400 border-2 border-cyan-400/50 rounded focus:ring-cyan-400/30"
+              />
+            </div>
+            <div className="ml-3 text-sm">
+              <label htmlFor="terms" className="text-cyan-400/80 font-mono">
+                I agree to the{' '}
+                <Link to="/terms" className="text-cyan-400 hover:text-cyan-300 underline">
+                  Terms and Conditions
+                </Link>
+              </label>
+            </div>
           </div>
+  
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`w-full py-3.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 transition-all ${
+              isLoading ? 'opacity-80 cursor-not-allowed' : ''
+            } shadow-lg hover:shadow-2xl hover:shadow-cyan-500/30`}
+          >
+            <span className="font-bold text-gray-900 text-sm">
+              {isLoading ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-5 h-5 border-2 border-gray-900 border-t-transparent rounded-full animate-spin" />
+                  <span>INITIALIZING...</span>
+                </div>
+              ) : (
+                'CREATE ACCOUNT'
+              )}
+            </span>
+          </button>
         </form>
+  
+        <div className="mt-8">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-cyan-400/20" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-black/30 text-cyan-400/80 font-mono">
+                SECURE CONNECTION
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
-
 export default Signup;

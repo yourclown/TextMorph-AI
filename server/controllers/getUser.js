@@ -2,16 +2,41 @@ const axios = require("axios");
 const { default: mongoose } = require("mongoose");
 const User = require("../models/user");
 const Payment = require("../models/payment");
+const { sendLowCreditEmail } = require("../utils/emailService");
+const logger = require("../utils/logger");
+const { json } = require("body-parser");
+const { getUserFromCacheOrDB } = require('../helpers/userCache');
+const redis = require("../utils/redisClient");
+
 
 const getUser = async (req, res) => {
   const userId = req.userId;
-  const user = await User.findById(userId).select("email credits");
-  if (!user) {
-    return res.status(404).json({ msg: "user not found" });
-  }
-  // console.log(user);
+  const skipCache = req.query.nocache === "true";
 
-  res.status(200).json(user);
+  const user = await getUserFromCacheOrDB(userId, { skipCache });
+  if (!user) {
+    return res.status(404).json({ msg: "User not found" });
+  }
+
+  if (user.credits <= 0) {
+    const emailKey = `lowCreditEmail:${userId}`;
+    const lastSent = await redis.get(emailKey);
+
+    if (!lastSent) {
+      try {
+        // await sendLowCreditEmail(user.email, user.credits);
+        logger.info(`Low credit email sent to: ${user.email}`);
+        // Store timestamp with 24-hour TTL
+        await redis.setEx(emailKey, 24 * 60 * 60, Date.now().toString());
+      } catch (err) {
+        logger.error("Failed to send low-credit email:", err);
+      }
+    } else {
+      logger.info(`Low credit email skipped for ${user.email}; last sent at ${new Date(parseInt(lastSent))}`);
+    }
+  }
+
+  return res.status(200).json(user);
 };
 
 const updateCredit = async (req, res) => {
