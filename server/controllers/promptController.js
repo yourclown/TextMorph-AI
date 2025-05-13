@@ -1,15 +1,14 @@
-
 // server/controllers/promptController.js
 import axios from "axios";
 import Prompt from "../models/prompt.js";
 import User from "../models/user.js";
-import { invalidateUserCache } from "../helpers/userCache.js";
+// import { invalidateUserCache } from "../helpers/userCache.js";
 
 export const transformText = async (req, res) => {
-  const io          = req.app.locals.io;
+  const io = req.app.locals.io;
   const onlineUsers = req.app.locals.onlineUsers;
-  const userId      = req.userId;
-  const socketId    = onlineUsers[userId];
+  const userId = req.userId;
+  const socketId = onlineUsers[userId];
 
   // 1) Immediately notify client we’ve kicked off the job
   if (socketId) {
@@ -68,11 +67,10 @@ export const transformText = async (req, res) => {
 
     const user = await User.findById(userId);
     user.credits -= 1;
-    user.lastCreditDeductedAt = new Date(); 
+    user.lastCreditDeductedAt = new Date();
     await user.save();
 
-    await invalidateUserCache(userId);
-
+    // await invalidateUserCache(userId);
 
     // 6) Finally, notify client that transformation is complete
     if (socketId) {
@@ -92,24 +90,23 @@ export const transformText = async (req, res) => {
   }
 };
 
-
 export const getHistory = async (req, res) => {
   try {
     const userId = req.userId;
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 3;
-    const search = req.query.search || '';
-    const genre = req.query.genre || '';
+    const search = req.query.search || "";
+    const genre = req.query.genre || "";
     const skip = (page - 1) * limit;
 
     // Build query
     const query = { userId };
-    
+
     // Add search filter for promptText or responseText
     if (search) {
       query.$or = [
-        { promptText: { $regex: search, $options: 'i' } },
-        { responseText: { $regex: search, $options: 'i' } }
+        { promptText: { $regex: search, $options: "i" } },
+        { responseText: { $regex: search, $options: "i" } },
       ];
     }
 
@@ -133,13 +130,13 @@ export const getHistory = async (req, res) => {
       history,
       total,
       page,
-      pages: Math.ceil(total / limit)
+      pages: Math.ceil(total / limit),
     });
   } catch (error) {
     console.error("Error fetching history:", error.message);
     return res.status(500).json({
       success: false,
-      error: error.message
+      error: error.message,
     });
   }
 };

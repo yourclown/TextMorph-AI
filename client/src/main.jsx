@@ -1,12 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import React from 'react';
+import React from "react";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GOOGLE_CLIENT_ID } from '../config.js';
+// import { GOOGLE_CLIENT_ID } from '.';
 
-const GOOGLE_ID = GOOGLE_CLIENT_ID;
+const GOOGLE_ID = process.env.GOOGLE_CLIENT_ID;
 
 import App from "./App.jsx";
 
