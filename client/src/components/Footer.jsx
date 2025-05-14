@@ -16,7 +16,7 @@ function Footer() {
           {/* Left Section */}
           <div className="group flex items-center space-x-2">
             <span className="text-cyan-400/80 font-mono text-sm">
-              Crafted with
+              Developed & Crafted by
             </span>
             <div className="h-1 w-1 bg-cyan-400 rounded-full animate-pulse" />
             <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent font-bold">
