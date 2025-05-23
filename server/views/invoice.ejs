@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice - Mindryl-Ai</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      margin: 0;
+      color: #007bff;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    .section h2 {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+      color: #333;
+    }
+    .section ul {
+      list-style: none;
+      padding: 0;
+    }
+    .section li {
+      margin-bottom: 8px;
+    }
+    .section li strong {
+      display: inline-block;
+      width: 150px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Mindryl-Ai</h1>
+      <p>Event Registration Invoice</p>
+    </div>
+
+    <div class="section">
+      <h2>Registration Details</h2>
+      <ul>
+        <li><strong>Event:</strong> <%= event.name %></li>
+        <li><strong>Date:</strong> <%= new Date(event.date).toLocaleDateString('en-IN') %></li>
+        <li><strong>Location:</strong> <%= event.location %></li>
+        <li><strong>Registration ID:</strong> <%= registration._id %></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Invoice Details</h2>
+      <ul>
+        <li><strong>Recipient:</strong> <%= user.name || user.email %></li>
+        <li><strong>Email:</strong> <%= user.email %></li>
+        <li><strong>Amount:</strong> ₹<%= payment.amount.toFixed(2) %></li>
+        <li><strong>Status:</strong> <%= payment.status.charAt(0).toUpperCase() + payment.status.slice(1) %></li>
+        <li><strong>Payment Method:</strong> <%= payment.method.charAt(0).toUpperCase() + payment.method.slice(1).replace('_', ' ') %></li>
+        <li><strong>Payment Date:</strong> <%= new Date(payment.paidAt).toLocaleDateString('en-IN') %></li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <p>Thank you for choosing Mindryl-Ai!</p>
+      <p>Contact us at <a href="mailto:contact@mindryl-ai.com">contact@mindryl-ai.com</a></p>
+    </div>
+  </div>
+</body>
+</html>

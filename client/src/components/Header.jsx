@@ -70,6 +70,17 @@ const Header = () => {
                 {/* <LayoutDashboard size={20} />/ */}
                 <span className="font-semibold">Dashboard</span>
               </NavLink>
+               <NavLink
+                to="/my-events"
+                className={({ isActive }) =>
+                  `flex items-center space-x-3 p-3 rounded-lg border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/40 transition-all duration-300 ${
+                    isActive ? "bg-cyan-400/20 border-cyan-400" : ""
+                  }`
+                }
+              >
+                {/* <LayoutDashboard size={20} />/ */}
+                <span className="font-semibold">My Events</span>
+              </NavLink>
               <Link
                 to="/create"
                 className="px-4 py-2 border border-cyan-400/30 rounded-lg text-cyan-400 hover:bg-cyan-400/10 transition-all"

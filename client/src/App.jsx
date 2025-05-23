@@ -16,6 +16,10 @@ import ConnectionsPage from "./components/ConnectionPage";
 import Navigation from "./components/navigation";
 import Footer from "./components/Footer";
 import DashboardLayout from "./components/Dashboard";
+import Event from "./pages/Event";
+import TabbedInterface from "./pages/Tabbedinterface";
+import EventFeed from "./pages/Eventfeeds";
+import MyEvents from "./pages/MyEvent";
 
 function App() {
   return (
@@ -47,10 +51,15 @@ function App() {
 
                   {/* Protected routes */}
                   <Route>
-                    <Route path="/create" element={<Prompt />} />
+                     <Route path="/create" element={<TabbedInterface />} />
+        <Route path="/create-event" element={<TabbedInterface />} />
+                            <Route path="/event-feeds" element={<EventFeed />} />
+
                     <Route path="/dashboard" element={<DashboardLayout />} />
                     <Route path="/myprofile" element={<ProfilePage />} />
                     <Route path="/history" element={<History />} />
+                                      <Route path="/my-events" element={<MyEvents />} />
+
                     <Route path="/feeds" element={<PostPage />} />
                     <Route path="/profile/:userId" element={<ProfilePage />} />
                     <Route path="/connections" element={<ConnectionsPage />} />

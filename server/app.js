@@ -1,9 +1,10 @@
 require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const mongoose = require("mongoose");
 const http = require("http");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -12,11 +13,10 @@ const promptRouter = require("./routes/promptsRouter");
 const userRouter = require("./routes/getUserRouter");
 const paymentRouter = require("./routes/paymentRouter");
 const postRoutes = require("./routes/postRoutes");
+const eventRoutes = require("./routes/event");
 const startCreditResetJob = require("./cron/creditReset");
-
 const { initSocket } = require("./socket/socketServices");
 
-dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -65,6 +65,7 @@ app.use("/api/prompt", promptRouter);
 app.use("/api/user", userRouter);
 app.use("/api/payment", paymentRouter);
 app.use("/api/posts", postRoutes);
+app.use("/api/events", eventRoutes);
 
 app.use(errorHandler);
 

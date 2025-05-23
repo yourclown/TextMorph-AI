@@ -7,6 +7,7 @@ import {
   User,
   LogOut,
   Edit,
+  Play,
 } from "react-feather";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
@@ -79,6 +80,17 @@ const Navigation = () => {
           >
             <User size={20} />
             <span className="font-semibold">My Feeds</span>
+          </NavLink>
+             <NavLink
+            to="/event-feeds"
+            className={({ isActive }) =>
+              `flex items-center space-x-3 p-3 rounded-lg border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/40 transition-all duration-300 ${
+                isActive ? "bg-cyan-400/20 border-cyan-400" : ""
+              }`
+            }
+          >
+            <Play size={20} />
+            <span className="font-semibold">Events feeds</span>
           </NavLink>
           <NavLink
             to="/create"
