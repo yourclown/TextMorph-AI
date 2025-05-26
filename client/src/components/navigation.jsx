@@ -60,7 +60,7 @@ const Navigation = () => {
       <aside className="w-64 bg-gray-800/30 backdrop-blur-lg border-r border-cyan-400/20 p-6 fixed h-screen hidden md:block z-50">
         <div className="mb-8">
           <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            {user.username || "User"}
+            {user.username || "Ankit"}
           </h2>
           <p className="text-sm text-cyan-400/70">{user.email || "No email"}</p>
         </div>
